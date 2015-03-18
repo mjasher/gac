@@ -1,5 +1,5 @@
      
-      SUBROUTINE SETUP()
+      SUBROUTINE SETUP(FNAMEC)
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW-2005
 C     ******************************************************************
@@ -31,6 +31,7 @@ C-------ASSIGN VERSION NUMBER AND DATE
 C
       CHARACTER*80 HEADNG(2)
       CHARACTER*200 FNAME
+      character FNAMEC*(*)
       INTEGER IBDT(8)
 C
       CHARACTER*4 CUNIT(NIUNIT)
@@ -56,7 +57,8 @@ C2------WRITE BANNER TO SCREEN AND DEFINE CONSTANTS.
       NCVGERR=0
 C
 C3------GET THE NAME OF THE NAME FILE
-      CALL GETNAMFIL(FNAME)
+C      CALL GETNAMFIL(FNAME)
+      FNAME = FNAMEC//".nam"
       MAXUNIT= INUNIT
 C
 C4------OPEN NAME FILE.

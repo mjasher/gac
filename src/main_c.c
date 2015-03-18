@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-extern void setup_();
+extern void setup_(char* name, int name_l);
 
 
 int main()
@@ -13,7 +13,8 @@ int main()
  
   printf("Integer that you have entered is %d\n", a);
 
-  setup_();
+  char * name = "tutorial2";
+  setup_(name, strlen(name));
 
   return 0;
 }

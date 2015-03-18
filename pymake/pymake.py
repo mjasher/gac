@@ -22,21 +22,41 @@ def compilenix(srcfiles, fc, fflags, cc, cflags, target):
     #build object files
     objfiles = []
     for srcfile in srcfiles:
+        srcname, srcext = os.path.splitext(srcfile)
+        filename = srcname.split(os.path.sep)[-1]
         cmdlist = []
-        if srcfile.endswith('.c') or srcfile.endswith('.cpp'):       
+        if srcfile.endswith('.c') or srcfile.endswith('.cpp'):  
+            
+            # checks if already exists, remove
+            # if os.path.exists(srcname+'.o') and os.path.getmtime(srcfile) < os.path.getmtime(srcname+'.o'):
+            #     objfiles.append(srcname + '.o')
+            #     continue
+            
             cmdlist.append(cc)     
             for switch in cflags:      
                 cmdlist.append(switch)     
-        else:          
+        elif srcfile.endswith('.f') or srcfile.endswith('.f90'):
+            
+            # checks if already exists, remove
+            # print srcfile
+            # if os.path.exists(srcname+'.o') and  os.path.getmtime(srcfile) < os.path.getmtime(srcname+'.o'):
+            #     objfiles.append(srcname + '.o')
+            #     continue
+            
             cmdlist.append(fc)
             for switch in fflags:
                 cmdlist.append(switch)
+        else:
+            continue
         cmdlist.append('-c')
         cmdlist.append(srcfile)
+        cmdlist.append('-o')
+        cmdlist.append(srcname+'.o')
+        cmdlist.append('-J')
+        cmdlist.append(  os.path.dirname(srcfile) )
         print 'check call: ', cmdlist
         subprocess.check_call(cmdlist)
-        srcname, srcext = os.path.splitext(srcfile)
-        srcname = srcname.split(os.path.sep)[-1]
+
         objfiles.append(srcname + '.o')
 
     #build executable
@@ -77,12 +97,13 @@ def main(inputdir, outputfile):
     #copy the original source to a pymake_tempdir_src directory
     # srcdir_origin = os.path.join('..', 'src')
     srcdir_origin = os.path.abspath(inputdir) # mja
+    # deletes old, remove
     try:
         shutil.rmtree('pymake_tempdir_src')
     except:
         pass
     shutil.copytree(srcdir_origin, 'pymake_tempdir_src')
-    srcdir_temp = os.path.join('.', 'pymake_tempdir_src')
+    srcdir_temp = os.path.abspath(os.path.join('pymake_tempdir_src'))
         
     #create a list of all c(pp), f and f90 source files
     templist = os.listdir(srcdir_temp)
@@ -129,14 +150,15 @@ c -- end of include file
         print "ERROR: Windows not supported. See original file."
 
     #clean things up
-    print 'making clean...'
-    filelist = os.listdir('.')
-    delext = ['.mod', objext]
-    for f in filelist:
-        for ext in delext:
-            if f.endswith(ext):
-                os.remove(f)
-    shutil.rmtree(srcdir_temp)
+    if False:
+        print 'making clean...'
+        filelist = os.listdir('.')
+        delext = ['.mod', objext]
+        for f in filelist:
+            for ext in delext:
+                if f.endswith(ext):
+                    os.remove(f)
+        shutil.rmtree(srcdir_temp)
 
     print 'Done...'
     return
