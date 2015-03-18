@@ -1,3 +1,7 @@
+.pyc
+junk/*
+
+
 # Object files
 *.o
 *.ko
