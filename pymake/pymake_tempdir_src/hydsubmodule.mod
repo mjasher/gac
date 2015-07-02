@@ -1,0 +1,68 @@
+GFORTRAN module version '10' created from /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/gwf2hydmod7.f
+MD5:4426ff377008ce1eebb2d7b41a0adc4d -- If you edit this, you'll get what you deserve.
+
+(() () () () () () () () () () () () () () () () () () () () () () () ()
+() () ())
+
+()
+
+(('hydsubtype' 'hydsubmodule' 2))
+
+()
+
+()
+
+()
+
+(2 'Hydsubtype' 'hydsubmodule' '' 1 ((DERIVED UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER_COMP) (UNKNOWN 0 0 0 0 UNKNOWN
+()) 0 0 () () 0 ((3 'nhydsub' (INTEGER 4 0 0 0 INTEGER ()) () (
+UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 POINTER)
+UNKNOWN-ACCESS ()) (4 'ibhydsub' (LOGICAL 4 0 0 0 LOGICAL ()) (1 0
+DEFERRED () ()) (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN
+0 0 DIMENSION POINTER) UNKNOWN-ACCESS ()) (5 'intrphydsub' (LOGICAL 4 0
+0 0 LOGICAL ()) (1 0 DEFERRED () ()) (UNKNOWN-FL UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION POINTER) UNKNOWN-ACCESS ()) (
+6 'jikhydsub' (INTEGER 4 0 0 0 INTEGER ()) (2 0 DEFERRED () () () ()) (
+UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN UNKNOWN 0 0 DIMENSION
+POINTER) UNKNOWN-ACCESS ()) (7 'hydsubwt' (REAL 4 0 0 0 REAL ()) (2 0
+DEFERRED () () () ()) (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DIMENSION POINTER) UNKNOWN-ACCESS ()) (8 'hydsubarr' (
+CHARACTER 1 0 0 0 CHARACTER ((CONSTANT (INTEGER 4 0 0 0 INTEGER ()) 0 '4')))
+(1 0 DEFERRED () ()) (UNKNOWN-FL UNKNOWN-INTENT UNKNOWN-PROC UNKNOWN
+UNKNOWN 0 0 DIMENSION POINTER) UNKNOWN-ACCESS ())) PUBLIC (() () () ())
+() 0 0 87250925)
+9 'hydsubarr' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE 0 0 DIMENSION POINTER) (CHARACTER 1 0 0 0
+CHARACTER ((CONSTANT (INTEGER 4 0 0 0 INTEGER ()) 0 '4'))) 0 0 () (1 0
+DEFERRED () ()) 0 () () () 0 0)
+10 'hydsubdat' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE 0 0 DIMENSION) (DERIVED 2 0 0 0
+DERIVED ()) 0 0 () (1 0 EXPLICIT (CONSTANT (INTEGER 4 0 0 0 INTEGER ())
+0 '1') (CONSTANT (INTEGER 4 0 0 0 INTEGER ()) 0 '10')) 0 () () () 0 0)
+11 'hydsubmodule' 'hydsubmodule' '' 1 ((MODULE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN UNKNOWN 0 0) (UNKNOWN 0 0 0 0 UNKNOWN ()) 0 0 () ()
+0 () () () 0 0)
+12 'hydsubtype' 'hydsubmodule' '' 1 ((PROCEDURE UNKNOWN-INTENT
+UNKNOWN-PROC DECL UNKNOWN 0 0 FUNCTION GENERIC) (REAL 4 0 0 0 REAL ()) 0
+0 () () 0 () () () 0 0)
+13 'hydsubwt' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE 0 0 DIMENSION POINTER) (REAL 4 0 0 0 REAL ()) 0 0
+() (2 0 DEFERRED () () () ()) 0 () () () 0 0)
+14 'ibhydsub' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE 0 0 DIMENSION POINTER) (LOGICAL 4 0 0 0 LOGICAL ())
+0 0 () (1 0 DEFERRED () ()) 0 () () () 0 0)
+15 'intrphydsub' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE 0 0 DIMENSION POINTER) (LOGICAL 4 0 0
+0 LOGICAL ()) 0 0 () (1 0 DEFERRED () ()) 0 () () () 0 0)
+16 'jikhydsub' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT
+UNKNOWN-PROC UNKNOWN EXPLICIT-SAVE 0 0 DIMENSION POINTER) (INTEGER 4 0 0
+0 INTEGER ()) 0 0 () (2 0 DEFERRED () () () ()) 0 () () () 0 0)
+17 'nhydsub' 'hydsubmodule' '' 1 ((VARIABLE UNKNOWN-INTENT UNKNOWN-PROC
+UNKNOWN EXPLICIT-SAVE 0 0 POINTER) (INTEGER 4 0 0 0 INTEGER ()) 0 0 () ()
+0 () () () 0 0)
+)
+
+('Hydsubtype' 0 2 'hydsubarr' 0 9 'hydsubdat' 0 10 'hydsubmodule' 0 11
+'hydsubtype' 0 12 'hydsubwt' 0 13 'ibhydsub' 0 14 'intrphydsub' 0 15
+'jikhydsub' 0 16 'nhydsub' 0 17)

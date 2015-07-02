@@ -1,8 +1,20 @@
-      SUBROUTINE QREF(A,TOTAL)
-      INTEGER A(4,3), TOTAL
-      DO I = 1,4
-      DO J = 1,3
-      TOTAL = TOTAL + A(I,J)
+      SUBROUTINE QREF(A,TOTAL, Z, Y, X)
+C     INTEGER A(4,3,1), TOTAL
+      INTEGER Z
+      INTEGER Y
+      INTEGER X
+      INTEGER,  DIMENSION(Z, Y, X) ::A
+C      INTEGER, DIMENSION(:,:,:), POINTER ::A
+      INTEGER TOTAL
+C      ALLOCATE (A(4,3,1))
+
+      WRITE(*,*) A
+
+      DO I = 1,Z
+      DO J = 1,Y
+      DO K = 1,X
+      TOTAL = TOTAL + A(I,J,K)
+      END DO
       END DO
       END DO
       END SUBROUTINE

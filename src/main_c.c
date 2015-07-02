@@ -1,20 +1,47 @@
 #include <stdio.h>
 
-extern void setup_(char* name, int name_l);
+// extern void setup_(char* name, int name_l, float* GACHNOFLO, int* GACIBOUND, float* GACSTRT);
+extern void setup_(float* , int*, int*, int*, int[1][10][10] , float[1][10][10], char* , int);
 
 
 int main()
 {
-  int a;
 
-  // printf("Enter an integer\n");
-  // scanf("%d", &a);
-  a = 4;
- 
-  printf("Integer that you have entered is %d\n", a);
+  char * name = "../tutorial2/tutorial2";
 
-  char * name = "tutorial2";
-  setup_(name, strlen(name));
+  float GACHNOFLO = -9999.0;
+  int NLAY = 1;
+  int NROW = 10;
+  int NCOL = 10;
+
+  int GACIBOUND[1][10][10] = {{ 
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	}};
+
+  float GACSTRT[1][10][10] = {{ 
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0},
+  	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}
+	}};
+
+  setup_(&GACHNOFLO, &NLAY, &NROW, &NCOL, GACIBOUND, GACSTRT, name, strlen(name));
+  // setup_(name, strlen(name));
 
   return 0;
 }

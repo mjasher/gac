@@ -1,13 +1,16 @@
-# Groundwater Analysis Code
+Groundwater Analysis Code
 ===========================
 
-This package aims to semi translate [MODFLOW](http://water.usgs.gov/ogw/modflow/MODFLOW.html#downloads) into Python. The intention is for the computationally expensive routines (the solvers) to remain in Fortran but to use Python for the finicky input/parameter to equation mapping.
+This package aims to semi translate [MODFLOW](http://water.usgs.gov/ogw/modflow/MODFLOW.html#downloads) into Python. The intention is for the computationally expensive routines (the solvers) to remain in Fortran but to use Python for the finicky construction of the discretized flow equation matrices from the various forms of input data.
 While [FloPy](https://github.com/modflowpy/flopy) writes input files for MODFLOW using python. GAC aims to get rid of text input files all together.
 Rather than 
+```
 data -> python (flopy) -> text inputs -> Fortran read (AR subroutines) -> discretized equations -> Fortran solve
+```
 we want something along the lines of
+```
 data -> python (GAC) -> discretized equations -> Fortran solve
-
+```
 This initial investigation aims to replicate the simple model from tutorial2 using only python wrapped Fortran routines. 
 
 Simmply wrapping each module with f2py doesn't seem to work. For example try
@@ -24,7 +27,7 @@ http://alignment.hep.brandeis.edu/Software/Mixing/Mixing_Manual.html
 SWIG wraps c fine, see
 http://wiki.scipy.org/Cookbook/SWIG_NumPy_examples
 
-## Method
+Method
 ------------------
 1. cut main program in mf2005.f into a bunch of subroutines
 2. wrap these subroutines in c functions
@@ -34,7 +37,7 @@ http://wiki.scipy.org/Cookbook/SWIG_NumPy_examples
 4. bingo
 
 
-## Building blocks
+Building blocks
 ------------------
 
 ### SWIG, numpy and c
@@ -46,7 +49,7 @@ c_fortran
 ### "complex" compiling
 pymake
 
-## Dependencies
+Dependencies
 ------------------
 
 ### [MODFLOW](http://water.usgs.gov/ogw/modflow/MODFLOW.html#downloads).
@@ -69,5 +72,30 @@ C mja    DATA FORM/'BINARY'/
 
 Copy flopy-master/examples/Tutorial02/tutorial02.py and edit to flopy_tutorial_2.py
 
+Details
+--------------------
+
+run flopy_tutorial_2.py
+
+run pymake 
+    inputdir = '../original_libraries/Unix/src/'
+    outputfile = 'mf2005_pymade'
+
+    # inputdir = '../src/'
+    # outputfile = 'gac_pymade'
+
+edit src/mf2005.f
+to  SUBROUTINE SETUP(FNAMEC)
+pymake should then find main_c.c executes
+
+./../pymake/gac_pymade
+# from flopy_tutorial_2 import plot
+# plot()
 
 
+GWF2BAS7AR and SGWF2BAS7ARDIS
+
+
+
+      FORTRAN: NCOL, NROW, NLAY
+      C: NLAY, NROW, NCOL

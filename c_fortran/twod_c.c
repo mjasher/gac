@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-extern void qref_( int[][4], int *);
+extern void qref_( int[1][3][4], int*, int*, int*, int*);
 
 extern void vecref_( int[], int * );
 
@@ -19,13 +19,16 @@ int main()
   // 2D array
 
   // int m[20][10] = ... ;
-  int m[3][4] = {  
+  int m[1][3][4] = {{  
 	 {0, 1, 2, 3} ,   /*  initializers for row indexed by 0 */
 	 {4, 5, 6, 7} ,   /*  initializers for row indexed by 1 */
 	 {8, 9, 10, 11}   /*  initializers for row indexed by 2 */
-	};
+	}};
   int sum = 0;
-  qref_( m, &sum );
+  int X = 1;
+  int Y = 3;
+  int Z = 4;
+  qref_( m, &sum , &X, &Y, &Z);
 
   printf("The sum is %d\n", sum);
 

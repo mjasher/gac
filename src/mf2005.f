@@ -1,5 +1,6 @@
      
-      SUBROUTINE SETUP(FNAMEC)
+      SUBROUTINE SETUP(GACHNOFLO, GACNLAY, GACNROW, GACNCOL,  
+     1        GACIBOUND, GACSTRT, FNAMEC)
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW-2005
 C     ******************************************************************
@@ -31,9 +32,19 @@ C-------ASSIGN VERSION NUMBER AND DATE
 C
       CHARACTER*80 HEADNG(2)
       CHARACTER*200 FNAME
-      character FNAMEC*(*)
       INTEGER IBDT(8)
 C
+      REAL GACHNOFLO
+      INTEGER GACNLAY
+      INTEGER GACNROW
+      INTEGER GACNCOL
+      INTEGER, DIMENSION(GACNCOL, GACNROW, GACNLAY) ::GACIBOUND
+      REAL, DIMENSION(GACNCOL, GACNROW, GACNLAY) ::GACSTRT
+      CHARACTER FNAMEC*(*)
+
+
+
+
       CHARACTER*4 CUNIT(NIUNIT)
       DATA CUNIT/'BCF6', 'WEL ', 'DRN ', 'RIV ', 'EVT ', 'gfd ', 'GHB ',  !  7
      &           'RCH ', 'SIP ', 'DE4 ', '    ', 'OC  ', 'PCG ', 'lmg ',  ! 14
@@ -48,6 +59,7 @@ C
      &           30*'    '/
 C     ------------------------------------------------------------------
 C
+
 C2------WRITE BANNER TO SCREEN AND DEFINE CONSTANTS.
       WRITE (*,1) MFVNAM,VERSION
     1 FORMAT (/,34X,'MODFLOW',A,/,
@@ -78,6 +90,23 @@ C6------ALLOCATE AND READ (AR) PROCEDURE
       NSOL=1
       CALL GWF2BAS7AR(INUNIT,CUNIT,VERSION,24,31,32,MAXUNIT,IGRID,12,
      1                HEADNG,26,MFVNAM)
+
+      WRITE(*,*) GACHNOFLO
+      WRITE(*,*) GACIBOUND(1,1,1)
+      WRITE(*,*) GACSTRT(1,1,1)
+      
+
+      HNOFLO = GACHNOFLO
+      DO 400 K=1,NLAY
+      DO 400 I=1,NROW
+      DO 400 J=1,NCOL
+        IBOUND(J,I,K) = GACIBOUND(J,I,K)
+        STRT(J,I,K) = GACSTRT(J,I,K)
+        HNEW(J,I,K)=STRT(J,I,K)
+        IF(IBOUND(J,I,K).EQ.0) HNEW(J,I,K)=HNOFLO
+  400 CONTINUE
+
+
       IF(IUNIT(50).GT.0 .AND. IUNIT(52).GT.0) THEN
         WRITE(IOUT,'(1X,/,1X,A)')
      1  'MNW1 and MNW2 cannot both be active in the same simulation'

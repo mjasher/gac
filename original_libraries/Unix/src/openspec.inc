@@ -13,7 +13,8 @@ C
 C  ACCESS specifier --
 C
 C    Standard Fortran -- Use unless there is a reason to do otherwise.
-      DATA ACCESS/'SEQUENTIAL'/
+C mja      DATA ACCESS/'SEQUENTIAL'/
+      DATA ACCESS/'STREAM'/
 C
 C
 C  FORM specifier --

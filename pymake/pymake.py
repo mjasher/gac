@@ -25,12 +25,20 @@ def compilenix(srcfiles, fc, fflags, cc, cflags, target):
         srcname, srcext = os.path.splitext(srcfile)
         filename = srcname.split(os.path.sep)[-1]
         cmdlist = []
+
+        # save time by compiling only if source is more recently changed than .o
+        # TODO what about dependancies?
+        # if os.path.exists(srcname+'.o'):
+        #     if os.path.getmtime(srcfile) < os.path.getmtime(srcname+'.o'):
+        #         objfiles.append(srcname + '.o')
+        #         continue
+        
         if srcfile.endswith('.c') or srcfile.endswith('.cpp'):  
             
             # checks if already exists, remove
             # if os.path.exists(srcname+'.o') and os.path.getmtime(srcfile) < os.path.getmtime(srcname+'.o'):
-            #     objfiles.append(srcname + '.o')
-            #     continue
+                # objfiles.append(srcname + '.o')
+                # continue
             
             cmdlist.append(cc)     
             for switch in cflags:      
@@ -40,8 +48,8 @@ def compilenix(srcfiles, fc, fflags, cc, cflags, target):
             # checks if already exists, remove
             # print srcfile
             # if os.path.exists(srcname+'.o') and  os.path.getmtime(srcfile) < os.path.getmtime(srcname+'.o'):
-            #     objfiles.append(srcname + '.o')
-            #     continue
+                # objfiles.append(srcname + '.o')
+                # continue
             
             cmdlist.append(fc)
             for switch in fflags:
@@ -179,8 +187,11 @@ if __name__ == "__main__":
     #   elif opt in ("-o", "--ofile"):
     #      outputfile = arg  
     
+    # inputdir = '../original_libraries/Unix/src/'
+    # outputfile = 'mf2005_pymade'
+
     inputdir = '../src/'
-    outputfile = 'pymade'
+    outputfile = 'gac_pymade'
 
     main(inputdir, outputfile)
 
