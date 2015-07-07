@@ -1,4 +1,5 @@
 import subprocess
+
 subprocess.call(['python', 'setup.py', 'build'])
 
 '''
@@ -11,7 +12,9 @@ subprocess.call(["gcc", "-c",  "-fPIC", "example.c", "example_wrap.c", "-I/usr/i
 subprocess.call(["gfortran","-shared", "utl7.o", "gwf2bas7.o", "example.o", "example_wrap.o",  "-o", "_example.so"])
 '''
 
-subprocess.call(['cp', '/home/mikey/Dropbox/jacqFLOW/swig_numpy/build/lib.linux-x86_64-2.7/_ezrange.so', '.'])
+subprocess.call(['cp', '/home/mikey/Dropbox/gac/swig_numpy/build/lib.linux-x86_64-2.7/_ezrange.so', '.'])
+
+# jacqFLOW
 
 import ezrange
 print "range 10", ezrange.range(10)

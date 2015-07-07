@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // extern void setup_(char* name, int name_l, float* GACHNOFLO, int* GACIBOUND, float* GACSTRT);
-extern void setup_(float* , int*, int*, int*, int[1][10][10] , float[1][10][10], char* , int);
+extern void setup_(float* HNOFLO, int* NLAY, int* NROW, int* NCOL, int IBOUND[1][10][10] , float STRT[1][10][10], char* NAME, int NAMEL);
 
 
 int main()
@@ -16,8 +16,8 @@ int main()
 
   int GACIBOUND[1][10][10] = {{ 
   	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-  	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+  	{0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
   	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
   	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
   	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
