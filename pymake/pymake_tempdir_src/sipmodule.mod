@@ -1,4 +1,4 @@
-GFORTRAN module version '10' created from /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/sip7.f
+GFORTRAN module version '10' created from sip7.f
 MD5:dd9a020f3064c6950f74e16ecba1850a -- If you edit this, you'll get what you deserve.
 
 (() () () () () () () () () () () () () () () () () () () () () () () ()

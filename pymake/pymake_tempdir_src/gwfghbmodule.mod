@@ -1,4 +1,4 @@
-GFORTRAN module version '10' created from /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/gwf2ghb7.f
+GFORTRAN module version '10' created from gwf2ghb7.f
 MD5:e424e0cc782d6462de0325bfcd44a770 -- If you edit this, you'll get what you deserve.
 
 (() () () () () () () () () () () () () () () () () () () () () () () ()

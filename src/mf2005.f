@@ -1,6 +1,8 @@
      
-      SUBROUTINE SETUP(GACHNOFLO, GACNCOL, GACNROW, GACNLAY,  
-     1        GACIBOUND, GACSTRT, FNAMEC)
+      SUBROUTINE RUN(   
+     1        GACNCOL, GACNROW, GACNLAY,
+     2        GACHNOFLO, GACIBOUND, GACSTRT, 
+     3        FNAMEC)
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW-2005
 C     ******************************************************************
@@ -34,13 +36,17 @@ C
       CHARACTER*200 FNAME
       INTEGER IBDT(8)
 C
+
+
 C     GAC ADD
-      REAL GACHNOFLO
       INTEGER GACNLAY
       INTEGER GACNROW
       INTEGER GACNCOL
-      REAL(8), DIMENSION(GACNCOL, GACNROW, GACNLAY) ::GACSTRT
+
+      REAL GACHNOFLO
       INTEGER(8), DIMENSION(GACNCOL, GACNROW, GACNLAY) ::GACIBOUND
+      REAL(8), DIMENSION(GACNCOL, GACNROW, GACNLAY) ::GACSTRT
+     
       CHARACTER FNAMEC*(*)
 
 
@@ -94,9 +100,6 @@ C6------ALLOCATE AND READ (AR) PROCEDURE
 
 C     GAC ADD
 C     replaces part of GWF2BAS7AR
-      WRITE(*,*) GACHNOFLO
-      WRITE(*,*) GACSTRT
-      WRITE(*,*) GACIBOUND
       HNOFLO = GACHNOFLO
       DO 400 K=1,NLAY
       DO 400 I=1,NROW
@@ -600,12 +603,11 @@ C10-----END OF PROGRAM.
       CALL USTOP(' ')
 C
 C      END
-
       RETURN
 
       END
 
-C     SUBROUTINE SETUP
+C     SUBROUTINE RUN
 
 
 

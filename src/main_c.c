@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // extern void setup_(char* name, int name_l, float* GACHNOFLO, int* GACIBOUND, float* GACSTRT);
-extern void setup_(float* HNOFLO, int* NLAY, int* NROW, int* NCOL, int IBOUND[1][10][10] , float STRT[1][10][10], char* NAME, int NAMEL);
+extern void run_(float* HNOFLO, int* NLAY, int* NROW, int* NCOL, int IBOUND[1][10][10] , float STRT[1][10][10], char* NAME, int NAMEL);
 
 
 int main()
@@ -40,7 +40,7 @@ int main()
   	{10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0}
 	}};
 
-  setup_(&GACHNOFLO, &NLAY, &NROW, &NCOL, GACIBOUND, GACSTRT, name, strlen(name));
+  run_(&GACHNOFLO, &NLAY, &NROW, &NCOL, GACIBOUND, GACSTRT, name, strlen(name));
   // setup_(name, strlen(name));
 
   return 0;

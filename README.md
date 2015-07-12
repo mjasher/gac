@@ -95,7 +95,11 @@ pymake should then find main_c.c executes
 
 GWF2BAS7AR and SGWF2BAS7ARDIS
 
-
-
       FORTRAN: NCOL, NROW, NLAY
       C: NLAY, NROW, NCOL
+
+
+It turns out ctypes can be a lot simpler than swig. You just do the "interface file" in python and there is no generated python/c wrappers. 
+
+An issue is that mf2005 calls USTOP with calls fortran STOP, this prevents return to python, but removing it messses up some data. 
+TODO???!!! is it okay to put STOP in another function? what does it do exactly?

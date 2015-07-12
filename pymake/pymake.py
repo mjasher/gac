@@ -187,11 +187,11 @@ if __name__ == "__main__":
     #   elif opt in ("-o", "--ofile"):
     #      outputfile = arg  
     
-    # inputdir = '../original_libraries/Unix/src/'
-    # outputfile = 'mf2005_pymade'
+    inputdir = '../original_libraries/Unix/src/'
+    outputfile = 'mf2005_pymade'
 
-    inputdir = '../src/'
-    outputfile = 'gac_pymade'
+    # inputdir = '../src/'
+    # outputfile = 'gac_pymade'
 
     main(inputdir, outputfile)
 

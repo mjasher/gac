@@ -48,7 +48,7 @@ gfortran -O2 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/src/mf2005.f -o /home/mik
 # gfortran -O2 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/gwf2mnw2i7.f -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/gwf2mnw2i7.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
 # gfortran -O2 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/obs2ghb7.f -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/obs2ghb7.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
 # gcc -D_UF -O3 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/r_vector.c -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/r_vector.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
-gcc -D_UF -O3 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/src/main_c.c -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/main_c.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
+# gcc -D_UF -O3 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/src/main_c.c -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/main_c.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
 # gcc -D_UF -O3 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/solvers.c -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/solvers.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
 # gcc -D_UF -O3 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/ccfd.c -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/ccfd.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src
 # gcc -D_UF -O3 -fopenmp -fPIC -c /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/mf2kgmg.c -o /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src/mf2kgmg.o -J /home/mikey/Dropbox/gac/pymake/pymake_tempdir_src

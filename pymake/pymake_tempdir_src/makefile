@@ -2,7 +2,7 @@
 
 # Makefile for non-USGS distribution
 #
-PROGRAM = mf2005gac
+PROGRAM = mf2005
 
 # Define the Fortran compile flags
 
@@ -85,11 +85,11 @@ OBJECTS = \
 
 # Define Task Function
 
-all: mf2005gac
+all: mf2005
 
 # Define what mf2005
 
-mf2005gac: $(OBJECTS) $(GMG)
+mf2005: $(OBJECTS) $(GMG)
 	-$(F90) $(F90FLAGS) -o mf2005 $(OBJECTS) $(GMG) $(USRLIB) $(SYSLIBS)
 
 # Object codes
