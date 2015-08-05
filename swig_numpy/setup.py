@@ -16,7 +16,8 @@ except AttributeError:
 # range extension module
 mod_ezrange = Extension("_ezrange",
                   # "ezrange.i",
-                   ["ezrange_wrap.c","ezrange.c"],
+                #   ["ezrange_wrap.c","ezrange.c"],
+                  ["ezrange.i","ezrange.c"],
                    include_dirs = [numpy_include],
                    extra_compile_args = ['-fopenmp','-fpic'],
                    extra_link_args = ['-lgomp']
