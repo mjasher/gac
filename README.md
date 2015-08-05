@@ -103,3 +103,8 @@ It turns out ctypes can be a lot simpler than swig. You just do the "interface f
 
 An issue is that mf2005 calls USTOP with calls fortran STOP, this prevents return to python, but removing it messses up some data. 
 TODO???!!! is it okay to put STOP in another function? what does it do exactly?
+Easy: just launch new process using multiprocessing
+
+
+STRUCTURE
+Figure 3–1. Flowchart of program to simulate ground-water flow.

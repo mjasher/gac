@@ -1,0 +1,13 @@
+http://water.usgs.gov/ogw/modflow/MODFLOW.html
+
+http://water.usgs.gov/ogw/modflow/MODFLOW-2005_v1.11.00/mf2005v1_11_00_unix.zip
+
+unzip mf2005v1_11_00_unix.zip
+# pymake on Unix/src
+
+
+git clone https://github.com/modflowpy/flopy
+mv flopy flopy-parent
+cp flopy-parent/flopy .
+
+flopy-parent/examples/Tutorials/Tutorial01/tutorial01.py

@@ -13,14 +13,82 @@ TODO
 * resolve lay, row, col vs col, row, lay
 * get rid of allocate routines alltogether!
 
+
+Packages just modify IBOUND,RHS,HCOF
+
+Note: SIP7AP doesn't use modules, so we could call it directly from python probs
+
+HNEW,IBOUND,CR,CC,CV,HCOF,RHS, # GLOB
+EL,FL,GL,V,W,HDCG,LRCH, # SIP
+NPARM,KKITER,HCLOSE,ACCL,ICNVG,
+KKSTP,KKPER,IPCALC,IPRSIP,MXITER,NSTP(KKPER),
+NCOL,NROW,NLAY,NODES,IOUT,0,IERR
+
+
+GWF2LPF7AD
+GWF2LPF7FM
+
+# Allocate and read
+      
+      IF(IUNIT(9).GT.0) CALL SIP7AR(IUNIT(9),MXITER,IGRID)
+      IF(IUNIT(23).GT.0) CALL GWF2LPF7AR(IUNIT(23),IGRID)
+
+# Stress periods
+# Read and prepare
 for KPER in range(NPER):
     for KSTP in range(NSTP[KPER]):
+        # Advance time
+          IF(IUNIT(23).GT.0) CALL GWF2LPF7AD(KKPER,IGRID)
+
+      ELSE IF (IUNIT(23).GT.0) THEN
+              CALL GWF2MNW27LPF(KPER,IGRID)
+
         for KITER in range(MXITER):
+
+            # Formulate
+                 IF(IUNIT(23).GT.0) CALL GWF2LPF7FM(KKITER,
+     1                             KKSTP,KKPER,IGRID)
+
+         ELSE IF (IUNIT(23).GT.0) THEN
+                CALL GWF2MNW27LPF(KPER,IGRID)
+
+            # Approximate
+
+            IF (IUNIT(9).GT.0) THEN
+                   CALL SIP7PNT(IGRID)
+                   CALL SIP7AP(HNEW,IBOUND,CR,CC,CV,HCOF,RHS,EL,FL,GL,
+     1               V,W,HDCG,LRCH,NPARM,KKITER,HCLOSE,ACCL,ICNVG,
+     2               KKSTP,KKPER,IPCALC,IPRSIP,MXITER,NSTP(KKPER),
+     3               NCOL,NROW,NLAY,NODES,IOUT,0,IERR)
+            END IF
+
+
             approximate_solution()
             if converged(): 
                 break
+        # Close
+        # Output control
+            CALL GWF2LPF7BDS(KKSTP,KKPER,IGRID)
+            CALL GWF2LPF7BDCH(KKSTP,KKPER,IGRID)
+            IBDRET=0
+            IC1=1
+            IC2=NCOL
+            IR1=1
+            IR2=NROW
+            IL1=1
+            IL2=NLAY
+            DO 157 IDIR=1,3
+              CALL GWF2LPF7BDADJ(KKSTP,KKPER,IDIR,IBDRET,
+     &                        IC1,IC2,IR1,IR2,IL1,IL2,IGRID)
 
+
+        # Water budget
+        # Output       
         save_appropriate_output()
+# Deallocate memory
+      IF(IUNIT(9).GT.0) CALL SIP7DA(IGRID)
+      IF(IUNIT(23).GT.0) CALL GWF2LPF7DA(IGRID)
+
 
 """
 

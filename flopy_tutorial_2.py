@@ -4,7 +4,8 @@ import numpy as np
 import flopy
 
 # modflow_exe ='/home/mikey/Dropbox/gac/original_libraries/Unix/src/mf2005'
-modflow_exe ='/home/mikey/Dropbox/gac/pymake/mf2005_pymade'
+# modflow_exe ='/home/mikey/Dropbox/gac/pymake/mf2005_pymade'
+modflow_exe ='/home/mikey/Dropbox/gac/pymake/functional_mf2005'
 modelname = 'tutorial2'
 
 # flopy.utils.HeadFile and flopy.utils.CellBudgetFile don't work on Mike's ubuntu laptop (michael.james.asher@gmail.com)
@@ -139,7 +140,9 @@ def run():
     import flopy.utils.binaryfile as bf
 
     # Create the headfile object
-    output_heads = read_heads(modelname+'/'+modelname+'.hds',nlay, nrow, ncol, nstp)
+    # output_heads = read_heads(modelname+'/'+modelname+'.hds',nlay, nrow, ncol, nstp)
+    headobj = bf.HeadFile(modelname+'/'+modelname+'.hds')
+    times = headobj.get_times()
 
     # Setup contour parameters
     levels = np.arange(1, 10, 1)
@@ -155,8 +158,8 @@ def run():
     mytimes = [1.0, 101.0, 201.0]
     for iplot, time in enumerate(mytimes):
         print '*****Processing time: ', time
-        head = output_heads[:,:,:,time-1]
-        # head = headobj.get_data(totim=time)
+        # head = output_heads[:,:,:,time-1]
+        head = headobj.get_data(totim=time)
         #Print statistics
         print 'Head statistics'
         print '  min: ', head.min()
@@ -261,5 +264,5 @@ def plot():
     plt.show()
 
 if __name__ == '__main__':
-    # run()
-    plot()
+    run()
+    # plot()
