@@ -1,0 +1,37 @@
+ ITERATION  SSWR-(HEAD OBSERVATIONS ONLY)
+     1        28891.82    
+     2        1762.929    
+     3        1323.808    
+     4        255.0626    
+     5        9.854519    
+     6       0.6542125E-01
+     7       0.5620160E-06
+     8       0.6785338E-06
+ ITERATION  SSWR-(DRAIN FLOW OBSERVATIONS ONLY)
+     1        536.1956    
+     2        43.63274    
+     3        32.56140    
+     4        6.335132    
+     5       0.4595257E-01
+     6       0.9914622E-04
+     7       0.9744997E-09
+     8       0.1157869E-08
+ ITERATION  SSWR-(GENERAL-HEAD BOUNDARY FLOW OBSERVATIONS ONLY)
+     1        23.08747    
+     2        6.390413    
+     3        5.019189    
+     4       0.9945880    
+     5       0.5023549E-03
+     6       0.1142509E-04
+     7       0.1038958E-09
+     8       0.7302898E-09
+ ITERATION  SSWR-(TOTAL FOR ALL OBSERVATIONS)
+     1        29451.11    
+     2        1812.952    
+     3        1361.389    
+     4        262.3923    
+     5        9.900973    
+     6       0.6553182E-01
+     7       0.5630944E-06
+     8       0.6804219E-06
+ STANDARD ERROR OF THE REGRESSION:  0.1272813E-03

@@ -18,6 +18,8 @@ TODO:
 * WEL
 * RCH
 
+
+scipy.sparse.linalg.cgs allows callbac, SC1 and SC2 are changes each iteration (multiple times per timestep)
 """
 
 
@@ -46,8 +48,8 @@ strt[:, -1, :] = 0.
 
 hk=10. 
 vka=10.
+laytyp = [0] # confined
 
-# MODFLOW 2005 doc (2-26) and (5-2)
 
 # h[i,j,k] is the head at node i,j,k
 # KR[i,j-1/2,k] is hydraulic conductivity along the row between nodes i,j,k and i,j-1,k (LT^{-1})
@@ -64,29 +66,24 @@ ISSFLG = [True, False]
 
 h_0 = strt
 IBOUND = ibound
+BOT = np.ones((ncol,nrow,nlay+1))
+for i in range(len(botm)):
+    BOT[:,:,i] *= botm[i]
+
+delr = delr * np.ones((ncol))
+delc = delc * np.ones((nrow))
+
+HK = hk * np.ones((ncol,nrow,nlay))
 
 """
 intransient inputs
 """
-SS = np.ones((nrow,ncol,nlay))
-# TODO vertical+1, work out harmonic meant etc
-# KR = np.ones((nrow+1,ncol+1,nlay+1))
-# KC = np.ones((nrow+1,ncol+1,nlay+1))
-# KV = np.ones((nrow+1,ncol+1,nlay+1))
+SS = np.ones((nrow,ncol,nlay)) # SPECIFIC STORAGE
+SY = np.ones((nrow,ncol,nlay)) # SPECIFIC YIELD
+HANI = np.ones((nrow,ncol,nlay)) # SPECIFIC YIELD
+VK = np.ones((nrow,ncol,nlay)) # SPECIFIC YIELD
 
-
-# def internode_transmissivity(T1, T2, delc_j, delr_i):
-	# CR[i,j+1,k] = 2.0 * delc[i] * TR[i,j,k] * TR[i,j+1,k] / ( TR[i,j,k]*delr[j+1] + TR[i,j+1,k]*delr[j] )
-	# return (delr1 + delr2) / (delr1/T1 + delr2/T2)
-
-
-# HK
-# HANI
-# VK
-# VKCB
-# dv_CB
-# TOP
-# BOT
+TSMULT = 1.
 
 
 """
@@ -110,32 +107,39 @@ h_old = h_0.flatten()
 
 h_all = np.empty((nrow, ncol, nlay, np.sum(NSTP)))
 
+Q = np.zeros((nrow,ncol,nlay))
+P = np.zeros((nrow,ncol,nlay))
+
+# DELT
+# bug potentiall line 574 of gwf2lpf7.f
+
 for IPER in range(NPER):
 	for ISTP in range(NSTP[IPER]):
 
 		"""
 		transient inputs
 		"""
-		Q = np.zeros((nrow,ncol,nlay))
-		P = np.zeros((nrow,ncol,nlay))
+		Q *= 0.
+		P *= 0.
 
-		# dt = (t[m] - t[m-1])
 		dt = 1.
+		# dt = PERLEN * (TSMULT - 1) / (TSMULT**NSTP[IPER] - 1)
 
-		for i in range(0, nrow):
-			for j in range(0, ncol):
-				for k in range(0, nlay):
+		for k in range(0, nlay):
+			for i in range(0, nrow):
+				for j in range(0, ncol):
 					# note i is i+1/2, i-1 is i-1/2, same for j and k
 					# this means 
+					node = i*ncol*nlay + j*nlay + k
 
 					# saturated thickness dv, h_old = HNEW
-					if h_old[i,j,k] >= TOP[i,j,k]:
-						dv[i,j,k] = TOP[i,j,k] - BOT[i,j,k]
-					elif TOP[i,j,k] > h_old[i,j,k] and h_old[i,j,k] > BOT[i,j,k]:
-						dv[i,j,k] = h_old[i,j,k] - BOT[i,j,k]
-					else:  # h_old[i,j,k] <= BOT[i,j,k]
+					if h_old[node] >= BOT[i,j,k-1]:
+						dv[i,j,k] = BOT[i,j,k-1] - BOT[i,j,k]
+					elif BOT[i,j,k-1] > h_old[node] and h_old[node] > BOT[i,j,k]:
+						dv[i,j,k] = h_old[node] - BOT[i,j,k]
+					else:  # h_old[node] <= BOT[i,j,k]
 						dv[i,j,k] = 0
-					# dv[i,j,k] = max(BOT[i,j,k], min(TOP[i,j,k], HNEW[i,j,k])) - BOT[i,j,k]
+					# dv[i,j,k] = max(BOT[i,j,k], min(BOT[i,j,k-1], HNEW[i,j,k])) - BOT[i,j,k]
 
 
 					if IBOUND[i,j,k] < 0:
@@ -149,15 +153,17 @@ for IPER in range(NPER):
 						q_c[i,j,k] = 0
 					else:	
 						# (5-17A)
-						TR[i,j,k] = dv[i,j,k] * HK[i,j,k]
+						TR_ijk = dv[i,j,k] * HK[i,j,k]
+						TR_ij1k = dv[i,j+1,k] * HK[i,j+1,k]
 						# (5-17B)
-						TC[i,j,k] = dv[i,j,k] * HK[i,j,k] * HANI[i,j,k]
+						TC_ijk = dv[i,j,k] * HK[i,j,k] * HANI[i,j,k]
+						TC_i1jk = dv[i+1,j,k] * HK[i+1,j,k] * HANI[i+1,j,k]
 						# CR[i,j+1,k] is CR[i,j+1/2,k] in documentation
 						# harmonic mean used here, there are alternatives, see (5-6)
 						# (5-14)
-						CR[i,j+1,k] = 2.0 * delc[i] * TR[i,j,k] * TR[i,j+1,k] / ( TR[i,j,k]*delr[j+1] + TR[i,j+1,k]*delr[j] )
+						CR[i,j+1,k] = 2.0 * delc[i] * TR_ijk * TR_ij1k / ( TR_ijk*delr[j+1] + TR_ij1k*delr[j] )
 						# (5-15)
-						CC[i+1,j,k] = 2.0 * delr[j] * TC[i,j,k] * TC[i+1,j,k] / ( TC[i,j,k]*delc[i+1] + TC[i+1,j,k]*delc[i] )
+						CC[i+1,j,k] = 2.0 * delr[j] * TC_ijk * TC_i1jk / ( TC_ijk*delc[i+1] + TC_i1jk*delc[i] )
 						
 
 						# TODO
@@ -177,30 +183,34 @@ for IPER in range(NPER):
 						flow_correction = False
 						if flow_correction:
 							# flow correction
-							if h_old[i,j,k] <= BOT[i,j,k]:
+							if h_old[node] <= BOT[i,j,k]:
 								# (5-30), when underlying cell i,j,k+1 is dewatered
 								q_c[i,j,k] = CV[i,j,k+1] * (h_old[i,j,k+1] - TOP[i,j,k+1])
 								# (5-31), for dewaterd cell itself
-								q_c[i,j,k] = CV[i,j,k] * (TOP[i,j,k] - h_old[i,j,k])
+								q_c[i,j,k] = CV[i,j,k] * (TOP[i,j,k] - h_old[node])
 							else:
 								q_c[i,j,k] = 0
 
 
-						# (2-9)
-						# CV[i,j,k] =  KV[i,j,k] * delc[i] *  delr[j] / dv[k] # note k is in fact k-1/2
-						# CC[i,j,k] =  KC[i,j,k] * delr[j] * dv[k] / delc[i] # note i is in fact i-1/2
-						# CR[i,j,k] =  KR[i,j,k] * delc[i] * dv[k] / delr[j] # note j is in fact j-1/2
-						
-						# CV[i,j,k+1] =  KV[i,j,k+1] * delc[i] *  delr[j] / dv[k] # note k is in fact k-1/2
-						# CC[i+1,j,k] =  KC[i+1,j,k] * delr[j] * dv[k] / delc[i] # note i is in fact i-1/2
-						# CR[i,j+1,k] =  KR[i,j+1,k] * delc[i] * dv[k] / delr[j] # note j is in fact j-1/2
 
+					# SC1[i,j,k] = SS[i,j,k] * delr[j] * delc[i] * dv[i,j,k]
+					# SC2[i,j,k] = SY[i,j,k] * delr[j] * delc[i]
+					
+					# (5-38)
+					# TODO based on iterations !!!
+					# if TOP[i,j,k] < h_old[node]:
+					# 	SCA = SC1[i,j,k]
+					# 	SCB = SC2[i,j,k]
+					# else:
+					# 	SCB = SC1[i,j,k]
 
+					SCA = SS[i,j,k] * delr[j] * delc[i] * dv[i,j,k]
+					SCB = SY[i,j,k] * delr[j] * delc[i]
 
-					SC1[i,j,k] = SS[i,j,k] * delr[j] * delc[i] * dv[i,j,k]
 
 					# (2-26)
-					HCOF[i,j,k] = P[i,j,k] - ( SS[i,j,k] * delr[j] * delc[i] * dv[k] ) / dt
+					HCOF[i,j,k] = P[i,j,k] - SCB / dt
+					# HCOF[i,j,k] = P[i,j,k] - ( SS[i,j,k] * delr[j] * delc[i] * dv[k] ) / dt
 
 					# RHS[i,j,k] = A[i*ncol*nlay + j*nlay + k, :] DOT h
 					node = i*ncol*nlay + j*nlay + k
@@ -223,10 +233,12 @@ for IPER in range(NPER):
 
 
 					# (2-26)
-					RHS[i,j,k] =  -Q[i,j,k] - ( SS[i,j,k] * delr[j] * delc[i] * dv[k] ) * h_old[node] / dt
+					RHS[i,j,k] =  -Q[i,j,k] - (SCA * ( BOT[i,j,k-1] - h_old[node] ) - SCB * BOT[i,j,k-1]) / dt
+					# RHS[i,j,k] =  -Q[i,j,k] - ( SS[i,j,k] * delr[j] * delc[i] * dv[k] ) * h_old[node] / dt
 
 		q = RHS.flatten()
 
+		# MODFLOW 2005 doc (2-26) and (5-2) is main equation
 		# A h = q
 		h_new = scipy.linalg.solve(A, q)
 		h_old = h_new

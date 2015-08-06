@@ -1,0 +1,25 @@
+ ITERATION  SSWR-(HEAD OBSERVATIONS ONLY)
+     1        268757.9    
+     2        609.5333    
+     3        52.67663    
+     4        4.765189    
+     5       0.1228034    
+     6       0.1583334E-02
+     7       0.1537490E-02
+ ITERATION  SSWR-(RIVER-PACKAGE FLOW OBSERVATIONS ONLY)
+     1        11.75619    
+     2       0.1460288    
+     3       0.1225582E-01
+     4       0.8440747E-04
+     5       0.2107316E-03
+     6       0.2052448E-03
+     7       0.2024747E-03
+ ITERATION  SSWR-(TOTAL FOR ALL OBSERVATIONS)
+     1        268769.6    
+     2        609.6793    
+     3        52.68889    
+     4        4.765273    
+     5       0.1230142    
+     6       0.1788579E-02
+     7       0.1739964E-02
+ STANDARD ERROR OF THE REGRESSION:  0.8180569E-02
